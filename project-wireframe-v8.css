@@ -1,0 +1,118 @@
+body {
+  font-family: poppins;
+  margin: 100px auto;
+}
+
+.container-md {
+  background-color: #ccffff;
+  border-radius: 10px;
+  display: grid;
+  max-width: 500px;
+  padding: 20px;
+  row-gap: 15px;
+}
+
+input {
+  border: 1px solid #0d6efd;
+  border-radius: 0.375rem;
+  height: 38px;
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.emoji-today,
+.emoji-fri,
+.emoji-sat,
+.emoji-sun,
+.emoji-mon,
+.emoji-tues,
+.emoji-wed {
+  background-color: white;
+  border: 1px solid #0d6efd;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  place-self: center end;
+}
+
+span.add-label {
+  display: none;
+}
+
+#min-ºC {
+  text-decoration: underline;
+  color: blue;
+}
+
+#max-ºC {
+  text-decoration: underline;
+  color: red;
+}
+
+#humidity-today {
+  display: none;
+}
+
+#min-today,
+#max-today {
+  display: inline;
+}
+
+#humidity-today,
+#min-today,
+#max-today {
+  transition: all 0.5s ease-in-out;
+}
+
+.emoji-today:hover span.align,
+.emoji-fri:hover span.align,
+.emoji-sat:hover span.align,
+.emoji-sun:hover span.align,
+.emoji-mon:hover span.align,
+.emoji-tues:hover span.align,
+.emoji-wed:hover span.align {
+  display: none;
+}
+.emoji-today:hover span.add-label,
+.emoji-fri:hover span.add-label,
+.emoji-sat:hover span.add-label,
+.emoji-sun:hover span.add-label,
+.emoji-mon:hover span.add-label,
+.emoji-tues:hover span.add-label,
+.emoji-wed:hover span.add-label {
+  display: block;
+}
+
+p {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.col {
+  display: grid;
+}
+
+.col-2 {
+  display: grid;
+}
+
+.btn-footer {
+  background-color: white;
+  border: 1px solid #0d6efd;
+  border-radius: 0.375rem;
+  place-self: center end;
+  text-align: right;
+}
+
+.btn-footer:hover {
+  display: block;
+}
