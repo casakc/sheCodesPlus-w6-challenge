@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Wireframe</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="project-wireframe-v8.css" />
+  </head>
+
+  <body>
+    <div class="container-md">
+      <form id="search-city">
+        <div class="row">
+          <div class="col-5">
+            <input
+              type="text"
+              autocomplete="off"
+              autofocus="on"
+              placeholder="Type location to search"
+              id="search-city-input"
+            />
+          </div>
+
+          <div class="col" id="search-button">
+            <input class="btn btn-primary" type="submit" value="Search" />
+          </div>
+
+          <div class="col" id="search-button">
+            <input
+              class="btn btn-success"
+              type="submit"
+              value="Current Location"
+              id="current-button"
+            />
+          </div>
+        </div>
+      </form>
+
+      <div class="location">
+        <div class="row">
+          <div class="col"><p id="city"></p></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-today">
+            <span class="align" id="weather-today-symbol">⛅</span
+            ><span class="add-label" id="rain-today-symbol">☔</span>
+          </button>
+        </div>
+
+        <div class="col-10">
+          TODAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col-4" id="temperature-today">
+                <a href="#" id="min-ºC"
+                  ><span style="color: blue" id="min-today">ºC</span></a
+                >
+                |
+                <a href="#" id="max-ºC"
+                  ><span style="color: red" id="max-today">ºC</span></a
+                >
+              </div>
+
+              <div class="col-4" id="wind-today">m/s</div>
+
+              <div class="col-4" id="humidity-today">%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-fri">
+            <span class="align">☀️</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          FRIDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-friday"
+                  >min 15<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-friday"
+                  >max 29<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-sat">
+            <span class="align">☀️</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          SATURDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-saturday"
+                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-saturday"
+                  >max 30<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-sun">
+            <span class="align">☀️</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          SUNDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-sunday"
+                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-sunday"
+                  >max 29<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-mon">
+            <span class="align">☀️</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          MONDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-monday"
+                  >min 18<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-monday"
+                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-tues">
+            <span class="align">⛅</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          TUESDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-tuesday"
+                  >min 16<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-tuesday"
+                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-2">
+          <button class="emoji-wed">
+            <span class="align">⛅</span><span class="add-label">☔</span>
+          </button>
+        </div>
+        <div class="col">
+          WEDNESDAY<br />
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <span style="color: blue" id="min-wednesday"
+                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col">
+                <span style="color: red" id="max-wednesday"
+                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
+                    >ºF</span
+                  ></span
+                >
+              </div>
+              <div class="col" id="rain-today">25% rain</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col">
+            <button class="btn-footer">
+              <span class="align" id="time1"></span>
+              <br />
+              <span id="date1"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="project-wireframe-v8.js"></script>
+  </body>
+</html>
