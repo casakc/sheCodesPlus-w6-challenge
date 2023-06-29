@@ -76,7 +76,7 @@ form.addEventListener("submit", searchCity);
 
 //City temperature (axios + openweathermap)
 function displayCity() {
-  let apiKey = "5fc80f22e10a8e8324900ac4fe77687f";
+  let apiKey = "b31489b6a38f5981f00c766b15c5856b";
   let units = "metric";
   let searchCityInput = document.querySelector("#search-city-input");
   let cityName = searchCityInput.value;
