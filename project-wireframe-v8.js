@@ -105,7 +105,7 @@ function showPosition(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
   let units = "metric";
-  let apiKey = "5fc80f22e10a8e8324900ac4fe77687f";
+  let apiKey = "b31489b6a38f5981f00c766b15c5856b";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then((response) => {
     let cityName = response.data.name.toUpperCase();
