@@ -66,11 +66,12 @@ function searchCity(event) {
     city.innerHTML = cityName;
     submitted = true;
   } else {
-    if (submitted) {
+    if (submitted && searchCityInput.value === "") {
       alert(`Please type your city in "Type location to search" field`);
     }
     city.innerHTML = null;
   }
+  console.log("#search-city");
 }
 form.addEventListener("submit", searchCity);
 
@@ -80,11 +81,19 @@ function displayCity() {
   let units = "metric";
   let searchCityInput = document.querySelector("#search-city-input");
   let cityName = searchCityInput.value;
+
+  if (cityName === "") {
+    alert(`Please type your city in "Type location to search" field`);
+    return;
+  }
+
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then((response) => {
     let cityName = response.data.name.toUpperCase();
     let cityElement = document.querySelector("p");
+
     cityElement.innerHTML = cityName;
+
     let minTemperature = Math.round(response.data.main.temp_min);
     let maxTemperature = Math.round(response.data.main.temp_max);
     let minToday = document.querySelector("#min-today");
