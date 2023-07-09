@@ -100,8 +100,46 @@ function displayCity() {
     minToday.innerHTML = `${minTemperature}ºC`;
     let maxToday = document.querySelector("#max-today");
     maxToday.innerHTML = `${maxTemperature}ºC`;
+    minToday.innerHTML = `${minTemperature}ºC (ºF)`;
+    maxToday.innerHTML = `${maxTemperature}ºC (ºF)`;
+    function displayMinTemperature(temp, unit) {
+      if (unit === "C") {
+        return `${minTemperature} ºC (ºF)`;
+      } else if (unit === "F") {
+        return `${(minTemperature * 9) / 5 + 32} ºF (ºC)`;
+      }
+    }
+    function displayMaxTemperature(temp, unit) {
+      if (unit === "C") {
+        return `${maxTemperature} ºC (ºF)`;
+      } else if (unit === "F") {
+        return `${(maxTemperature * 9) / 5 + 32} ºF (ºC)`;
+      }
+    }
+    minToday.addEventListener("click", function () {
+      if (isCelsius) {
+        minToday.innerHTML = displayMinTemperature(minTemperature, "F");
+        isCelsius = false;
+      } else {
+        minToday.innerHTML = displayMinTemperature(minTemperature, "C");
+        isCelsius = true;
+      }
+    });
+
+    maxToday.addEventListener("click", function () {
+      if (isCelsius) {
+        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "F");
+        isCelsius = false;
+      } else {
+        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "C");
+        isCelsius = true;
+      }
+    });
+
     let winToday = document.querySelector("#wind-today");
-    winToday.innerHTML = `${response.data.wind.speed} m/s wind`;
+    winToday.innerHTML = `${Math.round(
+      response.data.wind.speed * 3.6
+    )} km/h wind`;
     let humToday = document.querySelector("#humidity-today");
     humToday.innerHTML = `${response.data.main.humidity}% humidity`;
   });
@@ -120,14 +158,51 @@ function showPosition(position) {
     let cityName = response.data.name.toUpperCase();
     let cityElement = document.querySelector("p");
     cityElement.innerHTML = cityName;
+    let isCelsius = true;
     let minTemperature = Math.round(response.data.main.temp_min);
     let maxTemperature = Math.round(response.data.main.temp_max);
     let minToday = document.querySelector("#min-today");
-    minToday.innerHTML = `${minTemperature}ºC`;
     let maxToday = document.querySelector("#max-today");
-    maxToday.innerHTML = `${maxTemperature}ºC`;
+    minToday.innerHTML = `${minTemperature}ºC (ºF)`;
+    maxToday.innerHTML = `${maxTemperature}ºC (ºF)`;
+    function displayMinTemperature(temp, unit) {
+      if (unit === "C") {
+        return `${minTemperature} ºC (ºF)`;
+      } else if (unit === "F") {
+        return `${(minTemperature * 9) / 5 + 32} ºF (ºC)`;
+      }
+    }
+    function displayMaxTemperature(temp, unit) {
+      if (unit === "C") {
+        return `${maxTemperature} ºC (ºF)`;
+      } else if (unit === "F") {
+        return `${(maxTemperature * 9) / 5 + 32} ºF (ºC)`;
+      }
+    }
+    minToday.addEventListener("click", function () {
+      if (isCelsius) {
+        minToday.innerHTML = displayMinTemperature(minTemperature, "F");
+        isCelsius = false;
+      } else {
+        minToday.innerHTML = displayMinTemperature(minTemperature, "C");
+        isCelsius = true;
+      }
+    });
+
+    maxToday.addEventListener("click", function () {
+      if (isCelsius) {
+        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "F");
+        isCelsius = false;
+      } else {
+        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "C");
+        isCelsius = true;
+      }
+    });
+
     let winToday = document.querySelector("#wind-today");
-    winToday.innerHTML = `${response.data.wind.speed} m/s wind`;
+    winToday.innerHTML = `${Math.round(
+      response.data.wind.speed * 3.6
+    )} km/h wind`;
     let humToday = document.querySelector("#humidity-today");
     humToday.innerHTML = `${response.data.main.humidity}% humidity`;
   });

@@ -46,12 +46,12 @@ span.add-label {
 }
 
 #min-ºC {
-  text-decoration: underline;
+  text-decoration: none;
   color: blue;
 }
 
 #max-ºC {
-  text-decoration: underline;
+  text-decoration: none;
   color: red;
 }
 
