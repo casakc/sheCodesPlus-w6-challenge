@@ -106,14 +106,14 @@ function displayCity() {
       if (unit === "C") {
         return `${minTemperature} ºC (ºF)`;
       } else if (unit === "F") {
-        return `${(minTemperature * 9) / 5 + 32} ºF (ºC)`;
+        return `${Math.round((minTemperature * 9) / 5 + 32)} ºF (ºC)`;
       }
     }
     function displayMaxTemperature(temp, unit) {
       if (unit === "C") {
         return `${maxTemperature} ºC (ºF)`;
       } else if (unit === "F") {
-        return `${(maxTemperature * 9) / 5 + 32} ºF (ºC)`;
+        return `${Math.round((maxTemperature * 9) / 5 + 32)} ºF (ºC)`;
       }
     }
     minToday.addEventListener("click", function () {
@@ -169,14 +169,14 @@ function showPosition(position) {
       if (unit === "C") {
         return `${minTemperature} ºC (ºF)`;
       } else if (unit === "F") {
-        return `${(minTemperature * 9) / 5 + 32} ºF (ºC)`;
+        return `${Math.round((minTemperature * 9) / 5 + 32)} ºF (ºC)`;
       }
     }
     function displayMaxTemperature(temp, unit) {
       if (unit === "C") {
         return `${maxTemperature} ºC (ºF)`;
       } else if (unit === "F") {
-        return `${(maxTemperature * 9) / 5 + 32} ºF (ºC)`;
+        return `${Math.round((maxTemperature * 9) / 5 + 32)} ºF (ºC)`;
       }
     }
     minToday.addEventListener("click", function () {
