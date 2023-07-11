@@ -55,16 +55,11 @@ span.add-label {
   color: red;
 }
 
-#humidity-today {
-  display: none;
-}
-
 #min-today,
 #max-today {
   display: inline;
 }
 
-#humidity-today,
 #min-today,
 #max-today {
   transition: all 0.5s ease-in-out;
@@ -79,6 +74,22 @@ span.add-label {
 .emoji-wed:hover span.align {
   display: none;
 }
+
+#wind-today,
+#humidity-today {
+  display: none;
+}
+
+.emoji-today:hover + #wind-today,
+.emoji-today:hover + #humidity-today {
+  display: block;
+}
+
+.emoji-today:hover + #description-today,
+.emoji-today:hover + #temperature-today {
+  display: none;
+}
+
 .emoji-today:hover span.add-label,
 .emoji-fri:hover span.add-label,
 .emoji-sat:hover span.add-label,

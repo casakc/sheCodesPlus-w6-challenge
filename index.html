@@ -60,21 +60,23 @@
 
         <div class="col-10">
           TODAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col-6" id="temperature-today">
-                <a href="#" id="min-ºC"
+          <div class="row">
+            <div class="col-6">
+              <span id="description-today">Description today</span>
+              <span id="humidity-today">% humidity today</span>
+            </div>
+
+            <div class="col-6">
+              <span id="temperature-today"
+                ><a href="#" id="min-ºC"
                   ><span style="color: blue" id="min-today">ºC (ºF)</span></a
                 >
                 |
                 <a href="#" id="max-ºC"
                   ><span style="color: red" id="max-today">ºC (ºF)</span></a
-                >
-              </div>
-
-              <div class="col-4" id="wind-today">km/h wind</div>
-
-              <div class="col-2" id="humidity-today">%</div>
+                ></span
+              >
+              <span id="wind-today">Wind speed today</span>
             </div>
           </div>
         </div>
