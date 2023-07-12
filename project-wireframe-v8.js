@@ -100,8 +100,11 @@ function displayCity() {
     )} km/h wind`;
     let humToday = document.querySelector("#humidity-today");
     humToday.innerHTML = `${response.data.main.humidity}% humidity`;
+
     let descToday = document.querySelector("#description-today");
-    descToday.innerHTML = `${
+    descToday.innerHTML = `<img src="https://openweathermap.org/img/wn/${
+      response.data.weather[0].icon
+    }@2x.png" style="width: 20px; height: 20px;"> ${
       response.data.weather[0].description.charAt(0).toUpperCase() +
       response.data.weather[0].description.slice(1)
     }`;
@@ -160,6 +163,7 @@ function showPosition(position) {
   let units = "metric";
   let apiKey = "b31489b6a38f5981f00c766b15c5856b";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+  console.log(apiUrl);
   axios.get(apiUrl).then((response) => {
     let cityName = response.data.name.toUpperCase();
     let cityElement = document.querySelector("p");
@@ -171,8 +175,11 @@ function showPosition(position) {
     )} km/h wind`;
     let humToday = document.querySelector("#humidity-today");
     humToday.innerHTML = `${response.data.main.humidity}% humidity`;
+
     let descToday = document.querySelector("#description-today");
-    descToday.innerHTML = `${
+    descToday.innerHTML = `<img src="https://openweathermap.org/img/wn/${
+      response.data.weather[0].icon
+    }@2x.png" style="width: 20px; height: 20px;"> ${
       response.data.weather[0].description.charAt(0).toUpperCase() +
       response.data.weather[0].description.slice(1)
     }`;
