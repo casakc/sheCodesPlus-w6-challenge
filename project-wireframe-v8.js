@@ -279,8 +279,27 @@ function displayCity() {
 let searchButton = document.querySelector("#search-button");
 searchButton.addEventListener("click", displayCity);
 
-//Geolocation
 function showPosition(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let units = "metric";
+  let apiKey = "b31489b6a38f5981f00c766b15c5856b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+
+let currentButton = document.querySelector("#current-button");
+currentButton.addEventListener("click", () => {
+  navigator.geolocation.getCurrentPosition(showPosition);
+});
+
+window.addEventListener("load", () => {
+  navigator.geolocation.getCurrentPosition(showPosition);
+});
+
+//Geolocation
+
+/*function showPosition(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
   let units = "metric";
@@ -383,7 +402,7 @@ currentButton.addEventListener("click", () => {
 
 window.addEventListener("load", () => {
   navigator.geolocation.getCurrentPosition(showPosition);
-});
+});*/
 
 //Humidity
 /*function showHumidityToday() {
