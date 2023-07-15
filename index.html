@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row gy-3 forecast-day" id="forecast">
         <div class="col-2">
           <button class="emoji-today">
             <span class="align" id="weather-today-symbol">🌡️</span
@@ -62,14 +62,14 @@
           TODAY<br />
           <div class="row">
             <div class="col-6">
-              <span id="description-today"
+              <span class="description-today"
                 ><img src="" id="icon" /> Description today</span
               >
-              <span id="humidity-today">% humidity today</span>
+              <span class="humidity-today">% humidity</span>
             </div>
 
             <div class="col-6">
-              <span id="temperature-today"
+              <span class="temperature-today"
                 ><a href="#" id="min-ºC"
                   ><span style="color: blue" id="min-today">ºC (ºF)</span></a
                 >
@@ -78,187 +78,7 @@
                   ><span style="color: red" id="max-today">ºC (ºF)</span></a
                 ></span
               >
-              <span id="wind-today">Wind speed today</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-fri">
-            <span class="align">☀️</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          FRIDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-friday"
-                  >min 15<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-friday"
-                  >max 29<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-sat">
-            <span class="align">☀️</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          SATURDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-saturday"
-                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-saturday"
-                  >max 30<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-sun">
-            <span class="align">☀️</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          SUNDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-sunday"
-                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-sunday"
-                  >max 29<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-mon">
-            <span class="align">☀️</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          MONDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-monday"
-                  >min 18<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-monday"
-                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-tues">
-            <span class="align">⛅</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          TUESDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-tuesday"
-                  >min 16<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-tuesday"
-                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-2">
-          <button class="emoji-wed">
-            <span class="align">⛅</span><span class="add-label">☔</span>
-          </button>
-        </div>
-        <div class="col">
-          WEDNESDAY<br />
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <span style="color: blue" id="min-wednesday"
-                  >min 17<span id="min-ºC"> ºC</span>|<span id="min-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col">
-                <span style="color: red" id="max-wednesday"
-                  >max 27<span id="max-ºC"> ºC</span>|<span id="max-ºF"
-                    >ºF</span
-                  ></span
-                >
-              </div>
-              <div class="col" id="rain-today">25% rain</div>
+              <span class="wind-today"> km/h Wind</span>
             </div>
           </div>
         </div>

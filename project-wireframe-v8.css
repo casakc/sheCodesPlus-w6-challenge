@@ -17,10 +17,9 @@ input {
   border-radius: 0.375rem;
   height: 38px;
   text-align: center;
-  width: 100%;
 }
 
-.row {
+.gy-3 forecast-day {
   display: flex;
   align-items: center;
   justify-items: center;
@@ -75,18 +74,18 @@ span.add-label {
   display: none;
 }
 
-#wind-today,
-#humidity-today {
+.wind-today,
+.humidity-today {
   display: none;
 }
 
-.emoji-today:hover + #wind-today,
-.emoji-today:hover + #humidity-today {
+.emoji-today:hover + .wind-today,
+.emoji-today:hover + .humidity-today {
   display: block;
 }
 
-.emoji-today:hover + #description-today,
-.emoji-today:hover + #temperature-today {
+.emoji-today:hover + .description-today,
+.emoji-today:hover + .temperature-today {
   display: none;
 }
 
@@ -112,7 +111,8 @@ p {
   display: grid;
 }
 
-.col-2 {
+.col-2,
+.col-10 {
   display: grid;
 }
 

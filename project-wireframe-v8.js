@@ -71,11 +71,196 @@ function searchCity(event) {
     }
     city.innerHTML = null;
   }
-  console.log("#search-city");
 }
 form.addEventListener("submit", searchCity);
 
 //City temperature (axios + openweathermap)
+function formatDay(timestamp, index) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+  ];
+  if (index === 0) {
+    return "TODAY";
+  } else if (index === 1) {
+    return "TOMORROW";
+  } else {
+    return days[day];
+  }
+}
+
+function displayForecast(response) {
+  let forecast = response.data.daily;
+  let forecastElement = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row gy-3 forecast-day">`;
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 7) {
+      forecastHTML =
+        forecastHTML +
+        `
+        <div class="row gy-3 forecast-day">
+         <div class="col-2">
+          <button class="emoji-today">
+            <span class="align" id="weather-today-symbol">🌡️</span
+            ><span class="add-label" id="rain-today-symbol">☔</span>
+          </button>
+        </div>
+
+        <div class="col-10">
+          ${formatDay(forecastDay.dt, index)}<br />
+          <div class="row">
+            <div class="col-6">
+              <span class="description-today"
+                ><img src="https://openweathermap.org/img/wn/${
+                  forecastDay.weather[0].icon
+                }@2x.png" style="width: 20px; height: 20px;"
+                id="icon" />${
+                  forecastDay.weather[0].description.charAt(0).toUpperCase() +
+                  forecastDay.weather[0].description.slice(1)
+                }</span
+              >
+               <span class="humidity-today">${
+                 forecastDay.humidity
+               }% humidity</span>
+            </div>
+
+            <div class="col-6">
+              <span class="temperature-today"
+                ><a href="#" id="min-ºC"
+                  ><span style="color: blue" id="min-today">${Math.round(
+                    forecastDay.temp.min
+                  )}ºC (ºF)</span></a
+                >
+                |
+                <a href="#" id="max-ºC"
+                  ><span style="color: red" id="max-today">${Math.round(
+                    forecastDay.temp.max
+                  )}ºC (ºF)</span></a
+                ></span
+              >
+              <span class="wind-today">${Math.round(
+                forecastDay.wind_speed
+              )} km/h wind</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+    forecastHTML = forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+  });
+
+  function showHumidityToday(event) {
+    let forecastDayElement = event.target.closest(".forecast-day");
+    let humToday = forecastDayElement.querySelector(".humidity-today");
+    let tempToday = forecastDayElement.querySelector(".temperature-today");
+    let descToday = forecastDayElement.querySelector(".description-today");
+    let windToday = forecastDayElement.querySelector(".wind-today");
+    humToday.style.display = "block";
+    windToday.style.display = "block";
+    descToday.style.display = "none";
+    tempToday.style.display = "none";
+  }
+
+  function hideHumidityToday(event) {
+    let forecastDayElement = event.target.closest(".forecast-day");
+    let humToday = forecastDayElement.querySelector(".humidity-today");
+    let tempToday = forecastDayElement.querySelector(".temperature-today");
+    let descToday = forecastDayElement.querySelector(".description-today");
+    let windToday = forecastDayElement.querySelector(".wind-today");
+    tempToday.style.display = "block";
+    descToday.style.display = "block";
+    humToday.style.display = "none";
+    windToday.style.display = "none";
+  }
+
+  let weatherTodaySymbols = document.querySelectorAll("button.emoji-today");
+  weatherTodaySymbols.forEach(function (weatherTodaySymbol) {
+    weatherTodaySymbol.addEventListener("mouseover", showHumidityToday);
+    weatherTodaySymbol.addEventListener("mouseout", hideHumidityToday);
+  });
+}
+
+function getForecast(coordinates) {
+  let apiKey = "84cdb393c35ed430bc2aca35b1f19f8a";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function displayTemperature(response) {
+  let cityName = response.data.name.toUpperCase();
+  let cityElement = document.querySelector("p");
+
+  cityElement.innerHTML = cityName;
+
+  let winToday = document.querySelector(".wind-today");
+  winToday.innerHTML = `${Math.round(
+    response.data.wind.speed * 3.6
+  )} km/h wind`;
+  let humToday = document.querySelector(".humidity-today");
+  humToday.innerHTML = `${response.data.main.humidity}% humidity`;
+
+  let descToday = document.querySelector(".description-today");
+  descToday.innerHTML = `<img src="https://openweathermap.org/img/wn/${
+    response.data.weather[0].icon
+  }@2x.png" style="width: 20px; height: 20px;"> ${
+    response.data.weather[0].description.charAt(0).toUpperCase() +
+    response.data.weather[0].description.slice(1)
+  }`;
+
+  let minTemperature = Math.round(response.data.main.temp_min);
+  let maxTemperature = Math.round(response.data.main.temp_max);
+  let minToday = document.querySelector("#min-today");
+  minToday.innerHTML = `${minTemperature}ºC`;
+  let maxToday = document.querySelector("#max-today");
+  maxToday.innerHTML = `${maxTemperature}ºC`;
+  minToday.innerHTML = `${minTemperature}ºC (ºF)`;
+  maxToday.innerHTML = `${maxTemperature}ºC (ºF)`;
+  function displayMinTemperature(temp, unit) {
+    if (unit === "C") {
+      return `${minTemperature}ºC (ºF)`;
+    } else if (unit === "F") {
+      return `${Math.round((minTemperature * 9) / 5 + 32)}ºF (ºC)`;
+    }
+  }
+  function displayMaxTemperature(temp, unit) {
+    if (unit === "C") {
+      return `${maxTemperature}ºC (ºF)`;
+    } else if (unit === "F") {
+      return `${Math.round((maxTemperature * 9) / 5 + 32)}ºF (ºC)`;
+    }
+  }
+  minToday.addEventListener("click", function () {
+    if (isCelsius) {
+      minToday.innerHTML = displayMinTemperature(minTemperature, "F");
+      isCelsius = false;
+    } else {
+      minToday.innerHTML = displayMinTemperature(minTemperature, "C");
+      isCelsius = true;
+    }
+  });
+
+  maxToday.addEventListener("click", function () {
+    if (isCelsius) {
+      maxToday.innerHTML = displayMaxTemperature(maxTemperature, "F");
+      isCelsius = false;
+    } else {
+      maxToday.innerHTML = displayMaxTemperature(maxTemperature, "C");
+      isCelsius = true;
+    }
+  });
+  getForecast(response.data.coord);
+}
+
 function displayCity() {
   let apiKey = "b31489b6a38f5981f00c766b15c5856b";
   let units = "metric";
@@ -88,69 +273,7 @@ function displayCity() {
   }
 
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then((response) => {
-    let cityName = response.data.name.toUpperCase();
-    let cityElement = document.querySelector("p");
-
-    cityElement.innerHTML = cityName;
-
-    let winToday = document.querySelector("#wind-today");
-    winToday.innerHTML = `${Math.round(
-      response.data.wind.speed * 3.6
-    )} km/h wind`;
-    let humToday = document.querySelector("#humidity-today");
-    humToday.innerHTML = `${response.data.main.humidity}% humidity`;
-
-    let descToday = document.querySelector("#description-today");
-    descToday.innerHTML = `<img src="https://openweathermap.org/img/wn/${
-      response.data.weather[0].icon
-    }@2x.png" style="width: 20px; height: 20px;"> ${
-      response.data.weather[0].description.charAt(0).toUpperCase() +
-      response.data.weather[0].description.slice(1)
-    }`;
-
-    let minTemperature = Math.round(response.data.main.temp_min);
-    let maxTemperature = Math.round(response.data.main.temp_max);
-    let minToday = document.querySelector("#min-today");
-    minToday.innerHTML = `${minTemperature}ºC`;
-    let maxToday = document.querySelector("#max-today");
-    maxToday.innerHTML = `${maxTemperature}ºC`;
-    minToday.innerHTML = `${minTemperature}ºC (ºF)`;
-    maxToday.innerHTML = `${maxTemperature}ºC (ºF)`;
-    function displayMinTemperature(temp, unit) {
-      if (unit === "C") {
-        return `${minTemperature}ºC (ºF)`;
-      } else if (unit === "F") {
-        return `${Math.round((minTemperature * 9) / 5 + 32)}ºF (ºC)`;
-      }
-    }
-    function displayMaxTemperature(temp, unit) {
-      if (unit === "C") {
-        return `${maxTemperature}ºC (ºF)`;
-      } else if (unit === "F") {
-        return `${Math.round((maxTemperature * 9) / 5 + 32)}ºF (ºC)`;
-      }
-    }
-    minToday.addEventListener("click", function () {
-      if (isCelsius) {
-        minToday.innerHTML = displayMinTemperature(minTemperature, "F");
-        isCelsius = false;
-      } else {
-        minToday.innerHTML = displayMinTemperature(minTemperature, "C");
-        isCelsius = true;
-      }
-    });
-
-    maxToday.addEventListener("click", function () {
-      if (isCelsius) {
-        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "F");
-        isCelsius = false;
-      } else {
-        maxToday.innerHTML = displayMaxTemperature(maxTemperature, "C");
-        isCelsius = true;
-      }
-    });
-  });
+  axios.get(apiUrl).then(displayTemperature);
 }
 
 let searchButton = document.querySelector("#search-button");
@@ -163,20 +286,20 @@ function showPosition(position) {
   let units = "metric";
   let apiKey = "b31489b6a38f5981f00c766b15c5856b";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  console.log(apiUrl);
+
   axios.get(apiUrl).then((response) => {
     let cityName = response.data.name.toUpperCase();
     let cityElement = document.querySelector("p");
     cityElement.innerHTML = cityName;
 
-    let winToday = document.querySelector("#wind-today");
+    let winToday = document.querySelector(".wind-today");
     winToday.innerHTML = `${Math.round(
       response.data.wind.speed * 3.6
     )} km/h wind`;
-    let humToday = document.querySelector("#humidity-today");
+    let humToday = document.querySelector(".humidity-today");
     humToday.innerHTML = `${response.data.main.humidity}% humidity`;
 
-    let descToday = document.querySelector("#description-today");
+    let descToday = document.querySelector(".description-today");
     descToday.innerHTML = `<img src="https://openweathermap.org/img/wn/${
       response.data.weather[0].icon
     }@2x.png" style="width: 20px; height: 20px;"> ${
@@ -226,10 +349,10 @@ function showPosition(position) {
       }
     });
     function showHumidityToday() {
-      let humToday = document.querySelector("#humidity-today");
-      let tempToday = document.querySelector("#temperature-today");
-      let descToday = document.querySelector("#description-today");
-      let windToday = document.querySelector("#wind-today");
+      let humToday = document.querySelector(".humidity-today");
+      let tempToday = document.querySelector(".temperature-today");
+      let descToday = document.querySelector(".description-today");
+      let windToday = document.querySelector(".wind-today");
       humToday.style.display = "block";
       windToday.style.display = "block";
       descToday.style.display = "none";
@@ -237,10 +360,10 @@ function showPosition(position) {
     }
 
     function hideHumidityToday() {
-      let humToday = document.querySelector("#humidity-today");
-      let tempToday = document.querySelector("#temperature-today");
-      let descToday = document.querySelector("#description-today");
-      let windToday = document.querySelector("#wind-today");
+      let humToday = document.querySelector(".humidity-today");
+      let tempToday = document.querySelector(".temperature-today");
+      let descToday = document.querySelector(".description-today");
+      let windToday = document.querySelector(".wind-today");
       tempToday.style.display = "block";
       descToday.style.display = "block";
       humToday.style.display = "none";
@@ -252,187 +375,18 @@ function showPosition(position) {
     weatherTodaySymbol.addEventListener("mouseout", hideHumidityToday);
   });
 }
+
 let currentButton = document.querySelector("#current-button");
 currentButton.addEventListener("click", () => {
   navigator.geolocation.getCurrentPosition(showPosition);
 });
 
-//Temperature
-let isCelsius = true;
-function displayMinTemperature(temp, unit) {
-  if (unit === "C") {
-    return "min" + " " + temp + " ºC (ºF)";
-  } else if (unit === "F") {
-    return "min" + " " + ((temp * 9) / 5 + 32) + " ºF (ºC)";
-  }
-}
-
-let temp2 = 15;
-let minFriday = document.getElementById("min-friday");
-minFriday.innerHTML = displayMinTemperature(temp2, "C");
-minFriday.addEventListener("click", function () {
-  if (isCelsius) {
-    minFriday.innerHTML = displayMinTemperature(temp2, "F");
-    isCelsius = false;
-  } else {
-    minFriday.innerHTML = displayMinTemperature(temp2, "C");
-    isCelsius = true;
-  }
-});
-
-let temp3 = 15;
-let minSaturday = document.getElementById("min-saturday");
-minSaturday.innerHTML = displayMinTemperature(temp3, "C");
-minSaturday.addEventListener("click", function () {
-  if (isCelsius) {
-    minSaturday.innerHTML = displayMinTemperature(temp3, "F");
-    isCelsius = false;
-  } else {
-    minSaturday.innerHTML = displayMinTemperature(temp3, "C");
-    isCelsius = true;
-  }
-});
-
-let temp4 = 17;
-let minSunday = document.getElementById("min-sunday");
-minSunday.innerHTML = displayMinTemperature(temp4, "C");
-minSunday.addEventListener("click", function () {
-  if (isCelsius) {
-    minSunday.innerHTML = displayMinTemperature(temp4, "F");
-    isCelsius = false;
-  } else {
-    minSunday.innerHTML = displayMinTemperature(temp4, "C");
-    isCelsius = true;
-  }
-});
-
-let temp5 = 18;
-let minMonday = document.getElementById("min-monday");
-minMonday.innerHTML = displayMinTemperature(temp5, "C");
-minMonday.addEventListener("click", function () {
-  if (isCelsius) {
-    minMonday.innerHTML = displayMinTemperature(temp5, "F");
-    isCelsius = false;
-  } else {
-    minMonday.innerHTML = displayMinTemperature(temp5, "C");
-    isCelsius = true;
-  }
-});
-
-let temp6 = 16;
-let minTuesday = document.getElementById("min-tuesday");
-minTuesday.innerHTML = displayMinTemperature(temp6, "C");
-minTuesday.addEventListener("click", function () {
-  if (isCelsius) {
-    minTuesday.innerHTML = displayMinTemperature(temp6, "F");
-    isCelsius = false;
-  } else {
-    minTuesday.innerHTML = displayMinTemperature(temp6, "C");
-    isCelsius = true;
-  }
-});
-
-let temp7 = 17;
-let minWednesday = document.getElementById("min-wednesday");
-minWednesday.innerHTML = displayMinTemperature(temp7, "C");
-minWednesday.addEventListener("click", function () {
-  if (isCelsius) {
-    minWednesday.innerHTML = displayMinTemperature(temp7, "F");
-    isCelsius = false;
-  } else {
-    minWednesday.innerHTML = displayMinTemperature(temp7, "C");
-    isCelsius = true;
-  }
-});
-
-/*function displayMaxTemperature(temp, unit) {
-  if (unit === "C") {
-    return "max" + " " + temp + " ºC (ºF)";
-  } else if (unit === "F") {
-    return "max" + " " + ((temp * 9) / 5 + 32) + " ºF (ºC)";
-  }
-}*/
-
-let temp21 = 29;
-let maxFriday = document.getElementById("max-friday");
-maxFriday.innerHTML = displayMaxTemperature(temp21, "C");
-maxFriday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxFriday.innerHTML = displayMaxTemperature(temp21, "F");
-    isCelsius = false;
-  } else {
-    maxFriday.innerHTML = displayMaxTemperature(temp21, "C");
-    isCelsius = true;
-  }
-});
-
-let temp31 = 30;
-let maxSaturday = document.getElementById("max-saturday");
-maxSaturday.innerHTML = displayMaxTemperature(temp31, "C");
-maxSaturday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxSaturday.innerHTML = displayMaxTemperature(temp31, "F");
-    isCelsius = false;
-  } else {
-    maxSaturday.innerHTML = displayMaxTemperature(temp31, "C");
-    isCelsius = true;
-  }
-});
-
-let temp41 = 29;
-let maxSunday = document.getElementById("max-sunday");
-maxSunday.innerHTML = displayMaxTemperature(temp41, "C");
-maxSunday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxSunday.innerHTML = displayMaxTemperature(temp41, "F");
-    isCelsius = false;
-  } else {
-    maxSunday.innerHTML = displayMaxTemperature(temp41, "C");
-    isCelsius = true;
-  }
-});
-
-let temp51 = 27;
-let maxMonday = document.getElementById("max-monday");
-maxMonday.innerHTML = displayMaxTemperature(temp51, "C");
-maxMonday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxMonday.innerHTML = displayMaxTemperature(temp51, "F");
-    isCelsius = false;
-  } else {
-    maxMonday.innerHTML = displayMaxTemperature(temp51, "C");
-    isCelsius = true;
-  }
-});
-
-let temp61 = 27;
-let maxTuesday = document.getElementById("max-tuesday");
-maxTuesday.innerHTML = displayMaxTemperature(temp61, "C");
-maxTuesday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxTuesday.innerHTML = displayMaxTemperature(temp61, "F");
-    isCelsius = false;
-  } else {
-    maxTuesday.innerHTML = displayMaxTemperature(temp61, "C");
-    isCelsius = true;
-  }
-});
-
-let temp71 = 27;
-let maxWednesday = document.getElementById("max-wednesday");
-maxWednesday.innerHTML = displayMaxTemperature(temp71, "C");
-maxWednesday.addEventListener("click", function () {
-  if (isCelsius) {
-    maxWednesday.innerHTML = displayMaxTemperature(temp71, "F");
-    isCelsius = false;
-  } else {
-    maxWednesday.innerHTML = displayMaxTemperature(temp71, "C");
-    isCelsius = true;
-  }
+window.addEventListener("load", () => {
+  navigator.geolocation.getCurrentPosition(showPosition);
 });
 
 //Humidity
-function showHumidityToday() {
+/*function showHumidityToday() {
   let humToday = document.querySelector("#humidity-today");
   let tempToday = document.querySelector("#temperature-today");
   let descToday = document.querySelector("#description-today");
@@ -456,4 +410,4 @@ function hideHumidityToday() {
 
 let weatherTodaySymbol = document.querySelector("button.emoji-today");
 weatherTodaySymbol.addEventListener("mouseover", showHumidityToday);
-weatherTodaySymbol.addEventListener("mouseout", hideHumidityToday);
+weatherTodaySymbol.addEventListener("mouseout", hideHumidityToday);*/
