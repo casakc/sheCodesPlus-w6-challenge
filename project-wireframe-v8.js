@@ -100,7 +100,7 @@ let unit = "ºC";
 function displayForecast(response) {
   let forecast = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
-  let forecastHTML = `<div class="row forecast-day">`;
+  let forecastHTML = "";
 
   forecast.forEach(function (forecastDay, index) {
     if (index < 7) {
@@ -116,7 +116,7 @@ function displayForecast(response) {
         <div class="col-10">
           ${formatDay(forecastDay.dt, index)}<br />
           <div class="row">
-            <div class="col-6">
+            <div class="col">
               <span class="description-today"
                 ><img src="https://openweathermap.org/img/wn/${
                   forecastDay.weather[0].icon
@@ -129,7 +129,7 @@ function displayForecast(response) {
                  forecastDay.humidity
                }% humidity</span>
             </div>
-<div class="col-6">
+<div class="col">
               <span class="temperature-today"
                 ><a href="#/" id="min-ºC"
                   ><span style="color: blue" id="min-today">${Math.round(
